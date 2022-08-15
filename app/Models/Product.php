@@ -11,6 +11,6 @@ class Product extends Model
     protected $fillable = ['name', 'description', 'price', 'stock', 'size', 'code'];
 
     public function sales(){
-        return $this->hasMany(Sale::class)->orderBy('created_at', 'desc');
+        return $this->hasMany(SaleItem::class)->orderBy('created_at', 'desc');
     }
 }

@@ -18,11 +18,9 @@ class SaleResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => $this->user->name,
-            'quantity' => $this->quantity,
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer_phone,
-            'customer_address' => $this->customer_address,
-            'total' => $this->total,
+            'total' => number_format($this->total, 0, '', ','),
             'sale_items_count' => $this->sale_items_count,
             'created_at' =>$this->created_at->format('d F Y, h:i:s A'),
             'sale_items' => SaleItemResource::collection($this->whenLoaded('saleItems')),

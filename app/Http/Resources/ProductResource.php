@@ -18,12 +18,12 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => number_format($this->price, 0, '', '.'),
             'stock' => $this->stock,
             'size' => $this->size,
             'code' => $this->code,
             'created_at' => $this->created_at->toFormattedDateString(),
-            'sales' => SaleResource::collection($this->whenLoaded('sales')),
+            'sales' => SaleItemResource::collection($this->whenLoaded('sales')),
         ];
     }
 }

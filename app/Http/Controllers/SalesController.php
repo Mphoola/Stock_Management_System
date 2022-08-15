@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SalesRequest;
 use App\Http\Resources\SaleResource;
+use App\Jobs\AddSaleJob;
+use App\Models\Product;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 
@@ -26,15 +28,31 @@ class SalesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SalesRequest $request)
+    public function store(Request $request)
     {
         try {
-            $sale = Sale::create($request->all());
+            $sale = Sale::create([
+                'user_id' => auth()->id(),
+                'total' => $request->total,
+                'customer_name' => $request->customer_name,
+                'customer_email' => $request->customer_email,
+                'customer_phone' => $request->customer_phone,
+                'customer_address' => $request->customer_address,
+            ]);
+
             $sale->saleItems()->createMany($request->saleItems);
+
+            foreach ($request->saleItems as $saleItem) {
+
+                $product = Product::find($saleItem['product_id']);
+
+                $product->decrement('stock', $saleItem['quantity']);
+
+            }
+
             return response()->json([
                 'status' => true,
                 'message' => 'Sale created successfully',
-                'data' => new SaleResource($sale)
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -66,7 +84,7 @@ class SalesController extends Controller
                 'status' => false,
                 'message' => 'Error finding sale',
                 'errors' => $e->getMessage()
-            ], 500);
+            ], 200);
         }
     }
 
@@ -93,7 +111,7 @@ class SalesController extends Controller
                 'status' => false,
                 'message' => 'Error updating sale',
                 'errors' => $e->getMessage()
-            ], 500);
+            ], 200);
         }
     }
 

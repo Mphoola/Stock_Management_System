@@ -17,7 +17,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::latest()->take(10)->get();
         return ProductResource::collection($products);
     }
 
@@ -53,6 +53,7 @@ class ProductsController extends Controller
     {
         try{
             $product = Product::findOrFail($id);
+            $product->load('sales');
             return response()->json([
                 'status' => true,
                 'message' => 'Product is retrieved successfully',

@@ -17,8 +17,9 @@ class SaleItemResource extends JsonResource
         return [
             'id' => $this->id,
             'quantity' => $this->quantity,
-            'sub_total' => $this->sub_total,
-            'product' => $this->product,
+            'sale_id' => $this->sale_id,
+            'user' => $this->sale->user->name,
+            'created_at' =>$this->created_at->format('d F Y'),
         ];
     }
 }

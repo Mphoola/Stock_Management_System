@@ -29,11 +29,10 @@ class SalesRequest extends FormRequest
             'saleItems' => 'required|array|min:1',
             'saleItems.*.product_id' => 'required|exists:products,id',
             'saleItems.*.quantity' => 'required|integer|min:1',
-            'saleItems.*.sub_total' => 'required|numeric|min:0',
 
             'total' => 'required|numeric|min:0',
             'customer_name' => 'nullable|string|max:255',
-            'customer_phone' => 'nullable|digits:10',
+            'customer_phone' => 'nullable|string|max:255',
             'customer_address' => 'nullable|string|max:255',
         ];
     }

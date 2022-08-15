@@ -17,8 +17,8 @@ class SaleFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 10),
-            'total' => $this->faker->numberBetween(1, 100),
+            'user_id' => $this->faker->numberBetween(1, \App\Models\User::count()),
+            'total' => $this->faker->numberBetween(1000, 10000),
         ];
     }
 }
