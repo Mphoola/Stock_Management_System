@@ -7,7 +7,6 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\SalesController;
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/users', UsersController::class)->only(['index', 'show', 'update', 'destroy']);
     Route::apiResource('/products', ProductsController::class);
