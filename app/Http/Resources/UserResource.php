@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'active' => '6 minutes ago',
             'created_at' => $this->created_at->toFormattedDateString(),
             'sales' => SaleResource::collection($this->whenLoaded('sales')),
             'expenses' => ExpenseResource::collection($this->whenLoaded('expenses')),

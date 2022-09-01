@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://ndiwo-shop.herokuapp.com', 'http://localhost:8081'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
@@ -28,6 +28,7 @@ return [
     'exposed_headers' => [],
 
     'max_age' => 0,
+
 
     'supports_credentials' => true,
 
