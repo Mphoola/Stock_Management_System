@@ -1,0 +1,66 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app.931b9dd9.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/views/AboutView.vue",
+      "resources/js/views/Auth/Login.vue",
+      "resources/js/views/Auth/ForgetPassword.vue",
+      "resources/js/views/Auth/ResetPassword.vue",
+      "resources/js/views/PageNotFound.vue"
+    ],
+    "css": [
+      "assets/app.fb112267.css"
+    ]
+  },
+  "resources/js/views/AboutView.vue": {
+    "file": "assets/AboutView.c345037a.js",
+    "src": "resources/js/views/AboutView.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Auth/Login.vue": {
+    "file": "assets/Login.06b7cec2.js",
+    "src": "resources/js/views/Auth/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Auth/ForgetPassword.vue": {
+    "file": "assets/ForgetPassword.45b768fc.js",
+    "src": "resources/js/views/Auth/ForgetPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/Auth/ResetPassword.vue": {
+    "file": "assets/ResetPassword.7cdcb250.js",
+    "src": "resources/js/views/Auth/ResetPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/views/PageNotFound.vue": {
+    "file": "assets/PageNotFound.275246f8.js",
+    "src": "resources/js/views/PageNotFound.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/app.css": {
+    "file": "assets/app.fb112267.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app.c090eeea.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  }
+}
