@@ -59,7 +59,7 @@ On another ternimal run below command to start vue js
 
 ## Screenshots
 
-![App Login]('public/assets/screenshots/login.png')
+![App Login]('https://github.com/Mphoola/Stock_Management_System/blob/main/public/assets/screenshots/login.png')
 
 ## Contributing
 
