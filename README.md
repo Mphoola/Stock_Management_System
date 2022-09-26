@@ -58,8 +58,8 @@ On another ternimal run below command to start vue js
 ```
 
 ## Screenshots
+![login](https://user-images.githubusercontent.com/45689438/192292255-a7f2903f-728d-42f0-a547-71186d55cd74.png)
 
-![App Login]('https://github.com/Mphoola/Stock_Management_System/blob/main/public/assets/screenshots/login.png')
 
 ## Contributing
 
