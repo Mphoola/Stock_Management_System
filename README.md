@@ -18,7 +18,7 @@ Manage expenses and incomes, and get to know the balance of your shop.
 
 Laravel, API, Vue 3, Axios, Vuex, Vue Router, Bootstrap, HTML and CSS
 
-## Installation
+## Run Locally
 
 This project requires PHP version ^8.0.2 .
 Downloading and extract a zip file of this project or directly clone it to any of your server
@@ -44,6 +44,23 @@ copy .env.examples to .env and and update your DB credentials
     php artisan key:generate
     php artisan serve
 ```
+
+Run the code below to generate the database tables and seeder the DB with some dummy data
+
+```bash
+    php artisan migrate --seed
+```
+
+On another ternimal run below command to start vue js
+
+```bash
+    npm run dev
+```
+
+## Screenshots
+
+![App Login]('public/assets/screenshots/login.png')
+
 ## Contributing
 
 Contributions are always welcome!
@@ -65,5 +82,5 @@ degree in Computer Systems and Security from Malawi University of Science and Te
 If you discover a security vulnerability within Muzic, please send an e-mail to 
 Promise Mphoola via promisemphoola2@gmail.com. All security vulnerabilities will be promptly addressed.
 ## License
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
+The Stock Management System is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
 
