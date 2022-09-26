@@ -7,8 +7,15 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
+                'resources/js/assets/css/vertical-layout-light/style.css',
+                'resources/js/assets/vendors/css/vendor.bundle.base.css',
+                'resources/js/assets/vendors/feather/feather.css',
+
                 'resources/js/app.js',
+
+                'resources/js/assets/js/template.js',
+                'resources/js/assets/js/off-canvas.js',
+                'resources/js/assets/js/vendor.bundle.base.js',
             ],
             refresh: true,
         }),
