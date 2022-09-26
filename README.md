@@ -1,5 +1,5 @@
 
-# Muzic
+# Stock Management System
 
 A cool application to manage stocks in a small shop. Get to know which products are sold the most, which are the most profitable, and which are the least profitable.
 Manage expenses and incomes, and get to know the balance of your shop. 
