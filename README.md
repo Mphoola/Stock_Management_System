@@ -16,8 +16,7 @@ Manage expenses and incomes, and get to know the balance of your shop.
 
 ## Tech Stack
 
-Laravel, Bootstrap, HTML and CSS
-
+Laravel, API, Vue 3, Axios, Vuex, Vue Router, Bootstrap, HTML and CSS
 
 ## Installation
 
