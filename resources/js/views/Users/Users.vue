@@ -95,15 +95,24 @@
                           v-model="user.name"
                           class="form-control"
                           placeholder="Username"
+                          :class="{'is-invalid': v$.name.$error}"
                         />
+                        <div class="text-danger mt-2" v-if="v$.name.$error">
+                            {{ v$.name.$errors[0].$message }}
+                          </div>
                       </div>
+
                       <div class="form-group">
                         <input
                           type="email"
                           v-model="user.email"
                           class="form-control"
                           placeholder="Email"
+                          :class="{'is-invalid': v$.email.$error}"                          
                         />
+                        <div class="text-danger mt-2" v-if="v$.email.$error">
+                            {{v$.email.$errors[0].$message}}
+                        </div>
                       </div>
                       <div class="form-group">
                         <input
@@ -111,7 +120,11 @@
                           v-model="user.password"
                           class="form-control"
                           placeholder="Password"
-                        />
+                          :class="{'is-invalid': v$.password.$error}"                          
+                          />
+                          <div class="text-danger mt-2" v-if="v$.password.$error">
+                              {{v$.password.$errors[0].$message}}
+                          </div>
                       </div>
                       <div class="form-group">
                         <input
@@ -119,13 +132,17 @@
                           v-model="user.password_confirmation"
                           class="form-control"
                           placeholder="Password"
+                          :class="{'is-invalid': v$.password_confirmation.$error}"                          
                         />
+                        <div class="text-danger mt-2" v-if="v$.password_confirmation.$error">
+                            {{v$.password_confirmation.$errors[0].$message}}
+                        </div>
                       </div>
 
                       <button type="submit" class="btn btn-success me-2">
                         Add Now
                       </button>
-                      <button
+                      <button @click="resetForm"
                         type="button"
                         class="btn btn-danger mx-2"
                         data-bs-dismiss="modal"
@@ -190,7 +207,12 @@ export default {
       },
     }));
 
+    
     const v$ = useValidate(rules, user);
+    
+    const resetForm = () => {
+        v$.value.$reset();
+    }
 
     const addUser = async () => {
       const result = await v$.value.$validate();
@@ -198,10 +220,12 @@ export default {
         return;
       }
 
-      console.log(user)
+      store.dispatch('addUser', user).then(res) => {
+
+      }
     };
 
-    return { users, user, v$, addUser };
+    return { users, user, v$, addUser, resetForm };
   },
 };
 </script>
