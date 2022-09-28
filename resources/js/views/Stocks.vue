@@ -7,11 +7,10 @@
       <Sidebar />
       <div class="main-panel">
         <div class="content-wrapper">
-
-        <div class=" my-2">
-          <h3>Product Stocks</h3>
-          <p>Here you can update the stocks of each product</p>
-        </div>
+          <div class="my-2">
+            <h3>Product Stocks</h3>
+            <p>Here you can update the stocks of each product</p>
+          </div>
           <div class="row">
             <div class="col grid-margin stretch-card">
               <div class="card">
@@ -32,14 +31,20 @@
                           <td>{{ product.name }}</td>
                           <td class="font-weight-bold">{{ product.price }}</td>
                           <td>{{ product.size }}</td>
-                          <td>{{ product.stock }}</td>
+                          <td>
+                            {{ product.stock }}
+                          </td>
                           <td class="font-weight-medium">
-                            <!-- <router-link :to="{name: 'product-show', params: {id: product.id}}"> -->
-                              <i data-toggle="tooltip" data-placement="top" title="Edit stock" class="fa-solid fa-pen p-2 text-success" @click="setProductOnUpdate(product)"></i>
-                            <!-- </router-link> -->
+                            <button
+                              type="button"
+                              class="btn btn-success btn-sm"
+                                @click="toggleShowModal(product)"
+                            >
+                              Update
+                            </button>
+                            
                           </td>
                         </tr>
-
                       </tbody>
                     </table>
                   </div>
@@ -47,11 +52,69 @@
               </div>
             </div>
 
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="staticBackdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog ">
+                <div class="modal-content ">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                      Updating product stock | {{product.name}}
+                    </h5>
+                  </div>
+                  <div class="modal-body">
+                    <p class="text-danger mt-2" v-if="error">{{ error }}</p>
+                    <form class="forms-sample" @submit.prevent="updateStock(product.id)">
+                      <div class="form-group">
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Stock"
+                          v-model="product.stock"    
+                          :class="{ 'is-invalid': error }"     
+                        />
+                        
+                      </div>
+
+                      
+                      <button
+                        class="btn btn-success me-2"
+                        :disabled="$store.getters.isLoading"
+                        type="submit"
+                      >
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          v-if="$store.getters.isLoading"
+                          role="status"
+                        >
+                          <span class="visually-hidden"></span>
+                        </div>
+                        Update Now
+                      </button>
+
+                      <button
+                        @click="resetForm"
+                        type="button"
+                        class="btn btn-danger mx-2"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <Footer />
-
       </div>
     </div>
   </div>
@@ -63,37 +126,82 @@ import Footer from "@/components/Footer.vue";
 import Navbar from "@/components/Navbar.vue";
 import Settings from "@/components/Settings.vue";
 
-import { useStore} from "vuex";
-import { useRouter } from "vue-router";
-import {ref} from "vue";
+import { useStore } from "vuex";
+import { ref, reactive } from "vue";
 
-export default{
+export default {
   name: "ProductsView",
   components: {
     Footer,
     Navbar,
     Sidebar,
     Settings,
-},
+  },
   setup() {
     const store = useStore();
-    const router = useRouter();
     const products = ref([]);
-
-    store.dispatch("getProducts").then(res => {
-      products.value = res;
+    const selected_product = ref({});
+    const error = ref('');
+    const product = reactive({
+        name: '',
+        id: '',
+        stock: ''
     });
 
-    const setProductOnUpdate = (product) =>{
-      store.commit("SET_PRODUCT", product);
-      router.push({name: "product-update", params: {id: product.id}});
+    const showModal = ref(false);
+
+    const toggleShowModal = (p) => {
+        $('#staticBackdrop').modal('toggle');
+
+        product.name = p.name
+        product.id = p.id
+        product.stock = p.stock
+
+        showModal.value = !showModal.value
+        console.log(product)
     }
+
+    store.dispatch("getProducts").then((res) => {
+      products.value = store.getters.products;
+    });
+
+    const updateStock = (id) => {
+        error.value = ""
+        selected_product.value = products.value.find(product => product.id == id)
+        
+        if(selected_product.value['stock'] > product.stock){
+            error.value = "You can only increment stock. Reducing is automatic when you are adding sales"
+        }else{
+            selected_product.value['stock'] = product.stock
+            selected_product.value['_method'] = "PUT"
+
+            store.dispatch("updateProduct", selected_product).then((res) => {
+            //     if (res.status) {
+
+            //     Swal.fire({
+            //     toast: true,
+            //     position: "top-end",
+            //     showConfirmButton: false,
+            //     timer: 3000,
+            //     timerProgressBar: true,
+            //     icon: "success",
+            //     title: "Product stock updated successfully",
+            //     });
+            // }
+
+            }
+        }
+      
+    };
 
     return {
       products,
-      setProductOnUpdate,
+      updateStock,
+      product,
+      showModal,
+      toggleShowModal,
+      error
     };
   },
 };
-
 </script>

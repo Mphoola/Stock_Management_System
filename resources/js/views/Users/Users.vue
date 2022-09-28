@@ -16,7 +16,6 @@
             >
               Add Users
             </button>
-            
           </div>
           <div class="row">
             <div class="col grid-margin stretch-card">
@@ -88,7 +87,9 @@
                     </h5>
                   </div>
                   <div class="modal-body">
-                    <p class="text-danger mt-2" v-if="serverErrors">{{ serverErrors }}</p>
+                    <p class="text-danger mt-2" v-if="serverErrors">
+                      {{ serverErrors }}
+                    </p>
                     <form class="forms-sample" @submit.prevent="addUser">
                       <div class="form-group">
                         <input
@@ -96,11 +97,11 @@
                           v-model="user.name"
                           class="form-control"
                           placeholder="Username"
-                          :class="{'is-invalid': v$.name.$error}"
+                          :class="{ 'is-invalid': v$.name.$error }"
                         />
                         <div class="text-danger mt-2" v-if="v$.name.$error">
-                            {{ v$.name.$errors[0].$message }}
-                          </div>
+                          {{ v$.name.$errors[0].$message }}
+                        </div>
                       </div>
 
                       <div class="form-group">
@@ -109,10 +110,10 @@
                           v-model="user.email"
                           class="form-control"
                           placeholder="Email"
-                          :class="{'is-invalid': v$.email.$error}"
+                          :class="{ 'is-invalid': v$.email.$error }"
                         />
                         <div class="text-danger mt-2" v-if="v$.email.$error">
-                            {{v$.email.$errors[0].$message}}
+                          {{ v$.email.$errors[0].$message }}
                         </div>
                       </div>
                       <div class="form-group">
@@ -121,11 +122,11 @@
                           v-model="user.password"
                           class="form-control"
                           placeholder="Password"
-                          :class="{'is-invalid': v$.password.$error}"
-                          />
-                          <div class="text-danger mt-2" v-if="v$.password.$error">
-                              {{v$.password.$errors[0].$message}}
-                          </div>
+                          :class="{ 'is-invalid': v$.password.$error }"
+                        />
+                        <div class="text-danger mt-2" v-if="v$.password.$error">
+                          {{ v$.password.$errors[0].$message }}
+                        </div>
                       </div>
                       <div class="form-group">
                         <input
@@ -133,27 +134,34 @@
                           v-model="user.password_confirmation"
                           class="form-control"
                           placeholder="Password"
-                          :class="{'is-invalid': v$.password_confirmation.$error}"
+                          :class="{
+                            'is-invalid': v$.password_confirmation.$error,
+                          }"
                         />
-                        <div class="text-danger mt-2" v-if="v$.password_confirmation.$error">
-                            {{v$.password_confirmation.$errors[0].$message}}
+                        <div
+                          class="text-danger mt-2"
+                          v-if="v$.password_confirmation.$error"
+                        >
+                          {{ v$.password_confirmation.$errors[0].$message }}
                         </div>
                       </div>
                       <button
-                class="
-                btn btn-success me-2
-                "
-                :disabled="$store.getters.isLoading"
-                type="submit"
-              >
-                <div class="spinner-border spinner-border-sm text-light" v-if="$store.getters.isLoading" role="status">
-                  <span class="visually-hidden"></span>
-                </div>
-                Add Now
-              </button>
+                        class="btn btn-success me-2"
+                        :disabled="$store.getters.isLoading"
+                        type="submit"
+                      >
+                        <div
+                          class="spinner-border spinner-border-sm text-light"
+                          v-if="$store.getters.isLoading"
+                          role="status"
+                        >
+                          <span class="visually-hidden"></span>
+                        </div>
+                        Add Now
+                      </button>
 
-
-                      <button @click="resetForm"
+                      <button
+                        @click="resetForm"
                         type="button"
                         class="btn btn-danger mx-2"
                         data-bs-dismiss="modal"
@@ -219,17 +227,16 @@ export default {
       },
     }));
 
-
     const v$ = useValidate(rules, user);
 
     const resetForm = () => {
-        user.name = '';
-        user.email = '';
-        user.password = '';
-        user.password_confirmation = '';
+      user.name = "";
+      user.email = "";
+      user.password = "";
+      user.password_confirmation = "";
 
-        v$.value.$reset();
-    }
+      v$.value.$reset();
+    };
 
     const addUser = async () => {
       const result = await v$.value.$validate();
@@ -237,29 +244,29 @@ export default {
         return;
       }
 
-      store.dispatch('addUser', user).then((res) => {
-        if(res.status){
-            resetForm();
+      store.dispatch("addUser", user).then((res) => {
+        if (res.status) {
+          resetForm();
 
-            // $('#staticBackdrop').modal('toggle')
+          // $('#staticBackdrop').modal('toggle')
 
-            Swal.fire({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              icon: "success",
-              title: "User created successfully",
-            });
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            icon: "success",
+            title: "User created successfully",
+          });
 
-            store.dispatch("getUsers").then((res) => {
+          store.dispatch("getUsers").then((res) => {
             users.value = store.getters.users;
-            });  
-        }else{
-            serverErrors.value = res.message
+          });
+        } else {
+          serverErrors.value = res.message;
         }
-      })
+      });
     };
 
     return { users, user, v$, addUser, resetForm, serverErrors };

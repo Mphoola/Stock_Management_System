@@ -7,6 +7,7 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <Spinner />
+          <h4>Dashboard</h4>
 
         </div>
 
