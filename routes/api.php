@@ -10,6 +10,7 @@ use App\Http\Controllers\SalesController;
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/users', UsersController::class);
     Route::apiResource('/products', ProductsController::class);
+    Route::put('product/update/{id}/stock', [ProductsController::class, 'updateStock']);
     Route::apiResource('/expenses', ExpensesController::class);
     Route::apiResource('/sales', SalesController::class);
 

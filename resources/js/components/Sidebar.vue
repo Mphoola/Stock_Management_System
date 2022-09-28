@@ -26,12 +26,12 @@
           <span class="menu-title">Sales</span>
         </router-link>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <router-link to="/transactions" class="nav-link">
           <i class="fa-solid fa-money-bill-trend-up menu-icon"></i>
           <span class="menu-title">Transactions</span>
         </router-link>
-      </li>
+      </li> -->
       <li class="nav-item">
         <router-link to="/expenses" class="nav-link">
           <!-- <i class="fa-solid fa-money menu-icon"></i> -->

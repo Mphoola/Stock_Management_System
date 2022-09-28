@@ -91,6 +91,24 @@ class ProductsController extends Controller
         }
     }
 
+    public function updateStock(Request $request, $id){
+        try{
+            $product = Product::findOrFail($id);
+            $product->update([
+                'stock' => $request->stock
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Product stock is updated successfully',
+            ], 200);
+        }catch(\Throwable $th){
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

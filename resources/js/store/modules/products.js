@@ -48,6 +48,14 @@ export default {
                 return res
             })
         }, 
+        updateProductStock({}, product){
+            return postJson({
+                url: 'product/update/' + product.id + '/stock',
+                data: product
+            }).then(res => {
+                return res
+            })
+        }, 
         showProduct({commit}, id){
             return getJson({
                 url: '/products/' + id

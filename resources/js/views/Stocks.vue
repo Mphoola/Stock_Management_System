@@ -42,7 +42,7 @@
                             >
                               Update
                             </button>
-                            
+
                           </td>
                         </tr>
                       </tbody>
@@ -76,13 +76,13 @@
                           type="number"
                           class="form-control"
                           placeholder="Stock"
-                          v-model="product.stock"    
-                          :class="{ 'is-invalid': error }"     
+                          v-model="product.stock"
+                          :class="{ 'is-invalid': error }"
                         />
-                        
+
                       </div>
 
-                      
+
                       <button
                         class="btn btn-success me-2"
                         :disabled="$store.getters.isLoading"
@@ -145,10 +145,9 @@ export default {
     const product = reactive({
         name: '',
         id: '',
-        stock: ''
+        stock: '',
+        _method: 'PUT'
     });
-
-    const showModal = ref(false);
 
     const toggleShowModal = (p) => {
         $('#staticBackdrop').modal('toggle');
@@ -156,9 +155,6 @@ export default {
         product.name = p.name
         product.id = p.id
         product.stock = p.stock
-
-        showModal.value = !showModal.value
-        console.log(product)
     }
 
     store.dispatch("getProducts").then((res) => {
@@ -168,37 +164,32 @@ export default {
     const updateStock = (id) => {
         error.value = ""
         selected_product.value = products.value.find(product => product.id == id)
-        
+
         if(selected_product.value['stock'] > product.stock){
             error.value = "You can only increment stock. Reducing is automatic when you are adding sales"
         }else{
-            selected_product.value['stock'] = product.stock
-            selected_product.value['_method'] = "PUT"
-
-            store.dispatch("updateProduct", selected_product).then((res) => {
-            //     if (res.status) {
-
-            //     Swal.fire({
-            //     toast: true,
-            //     position: "top-end",
-            //     showConfirmButton: false,
-            //     timer: 3000,
-            //     timerProgressBar: true,
-            //     icon: "success",
-            //     title: "Product stock updated successfully",
-            //     });
-            // }
-
-            }
+            store.dispatch("updateProductStock", product).then((res) => {
+              if(res.status){
+                $('#staticBackdrop').modal('toggle');
+                    Swal.fire({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                icon: "success",
+                title: "Product stock updated successfully",
+                });
+              }
+            })
         }
-      
+
     };
 
     return {
       products,
       updateStock,
       product,
-      showModal,
       toggleShowModal,
       error
     };
