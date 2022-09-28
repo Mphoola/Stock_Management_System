@@ -251,7 +251,7 @@ export default {
             selectedItems.value = [];
             totalInCart.value = 0;
             products.value = [];
-
+            
             Swal.fire({
               toast: true,
               position: "top-end",

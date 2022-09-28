@@ -81,7 +81,7 @@
                       <label for="exampleInputConfirmPassword1"
                         >Available in stock</label
                       >
-                      <input
+                      <input disabled
                         type="number"
                         v-model="product.stock"
                         class="form-control"
@@ -156,6 +156,7 @@ import Navbar from "@/components/Navbar.vue";
 import Settings from "@/components/Settings.vue";
 import { useStore } from "vuex";
 import { computed, reactive } from "vue";
+import { useRouter } from "vue-router";
 import useValidate from "@vuelidate/core";
 import { required, numeric } from "@vuelidate/validators";
 
@@ -169,6 +170,8 @@ export default {
   },
   setup() {
     const store = useStore();
+
+    const router = useRouter();
 
     const productOnUpdate = store.getters.product
 
@@ -211,6 +214,8 @@ export default {
             product.code = "";
 
             v$.value.$reset();
+
+            router.push({name: 'products'})
 
             Swal.fire({
               toast: true,

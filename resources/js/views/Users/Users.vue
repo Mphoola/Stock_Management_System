@@ -16,7 +16,7 @@
             >
               Add Users
             </button>
-            <!-- <button class="btn btn-success btn-sm" @click="$router.push({path: '/users-add'})">Add User</button> -->
+            
           </div>
           <div class="row">
             <div class="col grid-margin stretch-card">
@@ -88,6 +88,7 @@
                     </h5>
                   </div>
                   <div class="modal-body">
+                    <p class="text-danger mt-2" v-if="serverErrors">{{ serverErrors }}</p>
                     <form class="forms-sample" @submit.prevent="addUser">
                       <div class="form-group">
                         <input
@@ -138,10 +139,20 @@
                             {{v$.password_confirmation.$errors[0].$message}}
                         </div>
                       </div>
+                      <button
+                class="
+                btn btn-success me-2
+                "
+                :disabled="$store.getters.isLoading"
+                type="submit"
+              >
+                <div class="spinner-border spinner-border-sm text-light" v-if="$store.getters.isLoading" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+                Add Now
+              </button>
 
-                      <button type="submit" class="btn btn-success me-2">
-                        Add Now
-                      </button>
+
                       <button @click="resetForm"
                         type="button"
                         class="btn btn-danger mx-2"
@@ -185,10 +196,10 @@ export default {
   setup() {
     const store = useStore();
     const users = ref([]);
-    const validationError = ('');
+    const serverErrors = ref("");
 
     store.dispatch("getUsers").then((res) => {
-      users.value = res;
+      users.value = store.getters.users;
     });
 
     const user = reactive({
@@ -212,6 +223,11 @@ export default {
     const v$ = useValidate(rules, user);
 
     const resetForm = () => {
+        user.name = '';
+        user.email = '';
+        user.password = '';
+        user.password_confirmation = '';
+
         v$.value.$reset();
     }
 
@@ -223,15 +239,30 @@ export default {
 
       store.dispatch('addUser', user).then((res) => {
         if(res.status){
+            resetForm();
 
+            // $('#staticBackdrop').modal('toggle')
+
+            Swal.fire({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              icon: "success",
+              title: "User created successfully",
+            });
+
+            store.dispatch("getUsers").then((res) => {
+            users.value = store.getters.users;
+            });  
         }else{
-
+            serverErrors.value = res.message
         }
-        console.log(res)
       })
     };
 
-    return { users, user, v$, addUser, resetForm, validationError };
+    return { users, user, v$, addUser, resetForm, serverErrors };
   },
 };
 </script>
