@@ -34,7 +34,7 @@ export default {
         },
         addUser({},user){
             return postJson({
-                url: '/users',
+                url: '/auth/register',
                 data: user
             }).then(res => {
                 return res

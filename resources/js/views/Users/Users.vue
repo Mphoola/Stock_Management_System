@@ -108,7 +108,7 @@
                           v-model="user.email"
                           class="form-control"
                           placeholder="Email"
-                          :class="{'is-invalid': v$.email.$error}"                          
+                          :class="{'is-invalid': v$.email.$error}"
                         />
                         <div class="text-danger mt-2" v-if="v$.email.$error">
                             {{v$.email.$errors[0].$message}}
@@ -120,7 +120,7 @@
                           v-model="user.password"
                           class="form-control"
                           placeholder="Password"
-                          :class="{'is-invalid': v$.password.$error}"                          
+                          :class="{'is-invalid': v$.password.$error}"
                           />
                           <div class="text-danger mt-2" v-if="v$.password.$error">
                               {{v$.password.$errors[0].$message}}
@@ -132,7 +132,7 @@
                           v-model="user.password_confirmation"
                           class="form-control"
                           placeholder="Password"
-                          :class="{'is-invalid': v$.password_confirmation.$error}"                          
+                          :class="{'is-invalid': v$.password_confirmation.$error}"
                         />
                         <div class="text-danger mt-2" v-if="v$.password_confirmation.$error">
                             {{v$.password_confirmation.$errors[0].$message}}
@@ -185,6 +185,7 @@ export default {
   setup() {
     const store = useStore();
     const users = ref([]);
+    const validationError = ('');
 
     store.dispatch("getUsers").then((res) => {
       users.value = res;
@@ -207,9 +208,9 @@ export default {
       },
     }));
 
-    
+
     const v$ = useValidate(rules, user);
-    
+
     const resetForm = () => {
         v$.value.$reset();
     }
@@ -220,12 +221,17 @@ export default {
         return;
       }
 
-      store.dispatch('addUser', user).then(res) => {
+      store.dispatch('addUser', user).then((res) => {
+        if(res.status){
 
-      }
+        }else{
+
+        }
+        console.log(res)
+      })
     };
 
-    return { users, user, v$, addUser, resetForm };
+    return { users, user, v$, addUser, resetForm, validationError };
   },
 };
 </script>

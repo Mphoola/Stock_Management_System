@@ -8,7 +8,7 @@ use App\Http\Controllers\ExpensesController;
 use App\Http\Controllers\SalesController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::apiResource('/users', UsersController::class)->only(['index', 'show', 'update', 'destroy']);
+    Route::apiResource('/users', UsersController::class);
     Route::apiResource('/products', ProductsController::class);
     Route::apiResource('/expenses', ExpensesController::class);
     Route::apiResource('/sales', SalesController::class);
